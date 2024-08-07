@@ -1,0 +1,110 @@
+spring:
+  application:
+    name: bzhweb-test
+  servlet:
+    multipart:
+      max-file-size: 200MB  #设置单个文件的大小  因为springboot内置tomact的的文件传输默认为10MB
+      max-request-size: 500MB   #设置单次请求的文件总大小
+      enabled: true    #千万注意要设置该参数，否则不生效
+  datasource:
+    #   数据源基本配置
+    username: root
+    password: Microvideo@2022
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.22.140.2:3307/zjjh?characterEncoding=UTF-8&useSSL=true&autoReconnect=true&failOverReadOnly=false
+    #    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+#    master:
+#      url: jdbc:mysql://172.22.140.2:3307/bzh?characterEncoding=UTF-8&useSSL=true&autoReconnect=true&failOverReadOnly=false
+#      username: root
+#      password: Microvideo@2022
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#    slave1:
+#      url: jdbc:mysql://172.22.140.2:3307/bzh?characterEncoding=UTF-8&useSSL=true&autoReconnect=true&failOverReadOnly=false
+#      username: root
+#      password: Microvideo@2022
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+#收费辅助线redis配置
+#chae:
+#  redis:
+#    host: 172.22.140.2
+#    port: 6380
+#    password:
+#    database: 0
+#    type: MASTER
+#    pool:
+#      enabled: true
+#      maxWaitMillis: 3000 #最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制
+#      maxTotal: 50 #最大连接数
+#      maxActive: 50 #最大激活连接数
+#      maxIdle: 10  #最大空闲连接数
+
+#收费辅助线redis集群配置
+chae:
+  redis:
+    cluster:
+      nodes:
+        - {host: 172.22.140.2,port: 6381,type: MASTER}
+        - {host: 172.22.140.2,port: 6382,type: MASTER}
+        - {host: 172.22.140.2,port: 6383,type: MASTER}
+    pool:
+      enabled: true
+      maxWaitMillis: 3000 #最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制
+      maxTotal: 50 #最大连接数
+      maxActive: 50 #最大激活连接数
+      maxIdle: 10  #最大空闲连接数
+
+#minio配置参数
+minio:
+  endpoint: http://172.22.140.2:9001
+  port: 9000
+  accessKey: minioadmin
+  secretKey: Microvideo@2022
+  bucketName: bzh
+  replaceUrl: http://172.22.140.2:9001/bzh
+
+feign:
+  client:
+    config:
+      bzhflowable: #对应微服务
+        # 连接超时时间(也可在配置类进行配置)
+        connect-timeout: 5000
+        # 请求处理超时时间
+        read-timeout: 10000
+  serviceName: bzhflowable
+
+qiyeweixin:
+  token:
+    getTokenUrl: https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s
+    tokenKey: mv-wx-token-tn-
+    getTicketUrl: https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?access_token=%s
+    ticketKey: mv-wx-token-ticket-
+    appNode:
+      agentId: 1000034
+      corpId: ww206a2f08bbd53992
+      secret: 25I3GnOsMjM5glsCdG5OiKlZqBbJcChOg7-64p-VaNY
+      getTicket: true
+
+remote:
+  dutyWorkUrl: https://nhdncs.jchc.cn/external-services/api/zbxt/dutyInventoryQuery
+
+
+
+

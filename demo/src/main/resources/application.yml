@@ -1,0 +1,53 @@
+spring:
+  profiles:
+    active: @spring.profiles.active@
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.22.140.2:8848
+  session:
+    store-type: redis
+    redis:
+      flush-mode: ON_SAVE
+      namespace: spring:session
+  jmx:
+    enabled: false
+  mybatis:
+    mapper-locations: classpath*:config/mybatis/**/*.xml
+    type-aliases-package: com.**.mapper.**
+  web:
+    resources:
+      add-mappings: false
+server:
+  port: 10086
+  tomcat:
+    threads:
+      min-spare: 30 #最小线程数
+      max: 1000 #最大线程数
+    max-connections: 500 #最大连接数
+    uri-encoding: UTF-8 #编码方式
+    max-http-form-post-size: 0 #post提交数据最大大小，设置为0不限制
+    connection-timeout: 10000 #连接超时时间
+  servlet:
+    session:
+      timeout: 7200s
+#    context-path: /bzhweb
+knife4j:
+  enable: true
+  setting:
+    language: zh-CN
+    enableSwaggerModels: false
+    enableHomeCustom: true
+    homeCustomLocation: classpath:knife4j/home.md
+    enableFooter: false
+    enableFooterCustom: true
+    footerCustomContent: Apache License 2.0 | Copyright  2022-[南京感动科技有限公司]
+  basic:
+    enable: true
+    username: microvideo
+    password: microvideo@2022
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

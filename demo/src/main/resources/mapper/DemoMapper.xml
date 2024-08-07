@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.colin.dev.march.TwentyFirst.mapper.DemoMapper">
+
+
+    <select id="getFirstTest" resultType="com.example.colin.dev.march.TwentyFirst.dto.DemoEntity">
+        select F_VC_ID as id, F_VC_MOBILE_PHONE as mobilePhone, F_VC_USER_NAME as userName
+        from t_user_info_test
+        where F_VC_MOBILE_PHONE = #{mobilePhone}
+
+    </select>
+</mapper>
